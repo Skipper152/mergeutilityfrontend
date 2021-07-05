@@ -11,3 +11,27 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.content {
+  padding-top: 2em; /* Расстояние от верхнего края */
+  padding-left: 7em; /* Расстояние от левого края */
+  padding-bottom: 2em;
+  padding-right: 7em;
+  /*padding-top: 5rem;
+  margin: 0 auto;
+  width: 600px;*/
+}
+
+.choose-file {
+  padding-bottom: 2em;
+
+  text-align: center;
+}
+
+.upload {
+  padding-top: 2em; /* Расстояние от верхнего края */
+
+  padding-left: 90em;
+
+  padding-right: 3em;
+}

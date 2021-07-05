@@ -1,25 +1,64 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {Component} from 'react'
+import {Menu} from 'antd';
+import {Link, Route, Switch} from "react-router-dom";
+import 'antd/dist/antd.css';
+import './index.css';
+import {SettingOutlined} from '@ant-design/icons';
+import Home from "./component/home";
+import UploadFile from './component/uploading'
+import {withRouter} from 'react-router'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            current: '',
+        };
+    }
+
+    handleClick = e => {
+        console.log('click ', e);
+        //this.setState({current: e.key});
+    };
+
+    render() {
+        const {current} = this.state;
+
+        return (
+            <div>
+                <Menu onClick={this.handleClick}
+                      selectedKeys={[current]}
+                      mode="horizontal" theme="dark"
+                >
+                    <Menu.Item key="home" icon={<SettingOutlined/>}>
+                        <Link to={"/"}>
+                            home
+                        </Link>
+                    </Menu.Item>
+                    <Menu.Item key="file" icon={<SettingOutlined/>}>
+                        <Link to={"/uploadFile"}>
+                            upload
+                        </Link>
+                    </Menu.Item>
+                </Menu>
+
+                <div className="container mt-1">
+                    <Switch>
+                        <Route exact path={["/", "/home"]} component={Home}/>
+                        <Route exact path="/uploadFile" component={UploadFile}/>
+                    </Switch>
+                </div>
+
+            </div>
+
+
+        );
+    }
+
 }
 
-export default App;
+// export default App;
+export default withRouter((App));
+
