@@ -215,6 +215,76 @@ export default class Home extends Component {
             }
         }
 
+        let renderSwitchParametersServicesObject;
+        renderSwitchParametersServicesObject = (obj, number, spaceNumber) => {
+            if (obj != null) {
+                if (number === 0) {
+                    counter += 1;
+                    switch (obj.operationType) {
+                        case 'DELETED':
+                            return <div style={{color: 'red'}}>
+                                {counter - 1}
+                                {getSpace(spaceNumber).map(function (i) {
+                                    return i;
+                                })}
+                                "{obj.oldKey}": {obj.oldValue}
+                            </div>;
+                        case 'ADDED':
+                            return <div style={{color: 'green'}}>{counter - 1}<br/></div>;
+                        case 'UPDATED':
+                            return <div style={{color: 'orange'}}>
+                                {counter - 1}
+                                {getSpace(spaceNumber).map(function (i) {
+                                    return i;
+                                })}
+                                "{obj.oldKey}": {obj.oldValue}
+                            </div>;
+                        case 'NONE':
+                            return <div>{counter - 1}
+                                {getSpace(spaceNumber).map(function (i) {
+                                    return i;
+                                })}
+                                "{obj.oldKey}": {obj.oldValue}
+                            </div>;
+                        default:
+                            return <div>Unvalid data!</div>;
+                    }
+
+                } else {
+                    counter += 1;
+                    switch (obj.operationType) {
+                        case 'DELETED':
+                            return <div style={{color: 'red'}}>{counter - 1}<br/></div>;
+                        case 'ADDED':
+                            return <div style={{color: 'green'}}>
+                                {counter - 1}
+                                {getSpace(spaceNumber).map(function (i) {
+                                    return i;
+                                })}
+                                "{obj.newKey}": {obj.newValue}
+                            </div>;
+                        case 'UPDATED':
+                            return <div style={{color: 'orange'}}>
+                                {counter - 1}
+                                {getSpace(spaceNumber).map(function (i) {
+                                    return i;
+                                })}
+                                "{obj.newKey}": {obj.newValue}
+                            </div>;
+                        case 'NONE':
+                            return <div>{counter - 1}
+                                {getSpace(spaceNumber).map(function (i) {
+                                    return i;
+                                })}
+                                "{obj.newKey}": {obj.newValue}
+                            </div>;
+                        default:
+                            return <div>Unvalid data!</div>;
+                    }
+                }
+            }
+        }
+
         let renderSwitchArrFields;
         renderSwitchArrFields = (field, spaceNumber) => {
             counter += 1;
@@ -451,13 +521,13 @@ export default class Home extends Component {
                             {renderSwitchObjectEnd(item.rpmRepositoryName, "\"rpm_repository_name\":", number, 5)}
 
                             {renderSwitchMandatoryFields(item.hashesMerge, "\"hashes\":", number, 5)}
-                            {getSpaceForArr(5).map(function (i) {
+                            {getSpaceForArr(6).map(function (i) {
                                 return i;
                             })}
                             &#123;
-                            {renderSwitchObjectEnd(item.hashesMerge.sha1, "\"sha1\":", number, 5)}
-                            {renderSwitchObjectEnd(item.hashesMerge.sha256, "\"sha256\":", number, 5)}
-                            {getSpaceForArr(5).map(function (i) {
+                            {renderSwitchObjectEnd(item.hashesMerge.sha1, "\"sha1\":", number, 6)}
+                            {renderSwitchObjectEnd(item.hashesMerge.sha256, "\"sha256\":", number, 6)}
+                            {getSpaceForArr(6).map(function (i) {
                                 return i;
                             })}&#125;
                             <br/>
@@ -479,6 +549,20 @@ export default class Home extends Component {
                 </div>
             </div>
         }
+
+        let renderSwitchParametersServices;
+        renderSwitchParametersServices = (Obj, number) => {
+            return <div>
+                        {
+                            Obj.map(function(item) {
+                                return <div>
+                                            {renderSwitchParametersServicesObject(item, number, 7)}
+                                       </div>
+                                    })
+                        }
+                   </div>
+        }
+
 
         let getSpace = (spaceNumber) => {
             let content = [];
@@ -522,6 +606,25 @@ export default class Home extends Component {
                         {renderSwitchObjectEnd(data.parametersMerge.commonMerge.someParam, "\"some-param\":", branch, 8)}
                         {renderSwitchObjectEnd(data.parametersMerge.commonMerge.someOtherParam, "\"some-other-param\":", branch, 8)}
                         {renderSwitchObjectEnd(data.parametersMerge.commonMerge.someElseParam, "\"some-else-param\":", branch, 8)}
+                        {renderSwitchMandatoryFields(data.parametersMerge.services, "\"services\":", branch, 5)}
+                        {renderSwitchArrFields("\"service_name\":", 6)}
+                        {renderSwitchParametersServices(data.parametersMerge.services.serviceName, branch)}
+                        {getSpaceForArr(6).map(function(i) {
+                            return i;
+                        })}
+                        ]
+                        {renderSwitchArrFields("\"service_name_1\":", 6)}
+                        {renderSwitchParametersServices(data.parametersMerge.services.serviceName1, branch)}
+                        {getSpaceForArr(6).map(function(i) {
+                            return i;
+                        })}
+                        ]
+                        {renderSwitchArrFields("\"service_name_2\":", 6)}
+                        {renderSwitchParametersServices(data.parametersMerge.services.serviceName2, branch)}
+                        {getSpaceForArr(6).map(function(i) {
+                            return i;
+                        })}
+                        ]
             </Col>
         }
 
