@@ -5,13 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(226, 229, 231) !important;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
 
 .content {
   padding-top: 2em; /* Расстояние от верхнего края */
@@ -32,7 +32,21 @@ code {
 .upload {
   padding-top: 2em; /* Расстояние от верхнего края */
 
-  padding-left: 90em;
+  padding-left: 80em;
 
   padding-right: 3em;
+}
+
+.error {
+  text-indent: 6cm;
+  color: red;
+}
+
+.error2 {
+  padding-right: 7em;
+  color: red;
+}
+
+.errorAll {
+  text-indent: 13cm;
 }

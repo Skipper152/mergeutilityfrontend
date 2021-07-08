@@ -1,9 +1,7 @@
 import React, {Component} from "react";
-import {Button, Col, Layout, Row} from "antd";
+import {Button, Col, Row} from "antd";
 import axios from "axios";
 import Text from "antd/es/typography/Text";
-
-const { Content } = Layout;
 
 export default class Home extends Component {
 
@@ -18,21 +16,33 @@ export default class Home extends Component {
         this.state = {
             isLoaded: false,
 
-            fileFirst: null,
-            fileSecond: null,
+            fileFirst: undefined,
+            fileSecond: undefined,
 
-            data: null,
+            data: undefined,
 
-            counter: 0
+            counter: 0,
+            
+            error: null
         };
     }
 
     handleChangeForFirstFile = (e) => {
-        this.setState({fileFirst: e.target.files[0]})
+        this.setState({
+            fileFirst: e.target.files[0],
+            isLoaded : false,
+            error: null
+        })
+        //e = null;
     }
 
     handleChangeForSecondFile = (e) => {
-        this.setState({fileSecond: e.target.files[0]})
+        this.setState({
+            fileSecond: e.target.files[0],
+            isLoaded : false,
+            error: null
+        })
+        //e = null;
     }
 
     upload() {
@@ -50,14 +60,16 @@ export default class Home extends Component {
 
         axios.post("http://localhost:8080/upload", formData).then(response => {
             this.setState({
-                data : response.data,
-                isLoaded : true
+                data: response.data,
+                isLoaded: true,
+                error: null
             })
-
-            console.log(response)
-
+        }, error => {
+            this.setState({
+                error: error.response.data,
+                isLoaded: false
+            })
         });
-
     }
 
     /*upload1() {
@@ -95,7 +107,7 @@ export default class Home extends Component {
                     case 'ADDED':
                         return <div style={{color: 'green'}}>{counter-1}<br/></div>;
                     case 'UPDATED':
-                        return <div style={{color: 'orange'}}>
+                        return <div style={{color: 'darkorange'}}>
                                     {counter-1}
                                     {getSpace(spaceNumber).map(function(i) {
                                         return i;
@@ -297,10 +309,10 @@ export default class Home extends Component {
         }
 
         let renderSwitchArrService;
-        renderSwitchArrService = (Obj, number) => {
+        renderSwitchArrService = (obj, number) => {
             return <div>
                         {
-                            Obj.map(function(item) {
+                            obj.map(function(item) {
                                 return <div>
                                     {getSpaceForArr(6).map(function(i) {
                                         return i;
@@ -345,10 +357,10 @@ export default class Home extends Component {
         }
 
         let renderSwitchArrArtifact;
-        renderSwitchArrArtifact = (Obj, number) => {
+        renderSwitchArrArtifact = (obj, number) => {
             return <div>
                 {
-                    Obj.map(function(item) {
+                    obj.map(function(item) {
                         if (item.mvn === 0) {
                             return <div>
                                 {getSpaceForArr(6).map(function (i) {
@@ -393,7 +405,7 @@ export default class Home extends Component {
                                         &#123;
                                         {renderSwitchArrFields("\"mvn\":", 6)}
 
-                                        {renderSwitchArrMVN(item.mvnMerges, 0)}
+                                        {renderSwitchArrMVN(item.mvnMerges, number)}
 
                                         {getSpaceForArr(6).map(function (i) {
                                             return i;
@@ -420,10 +432,10 @@ export default class Home extends Component {
         }
 
         let renderSwitchArrMVN;
-        renderSwitchArrMVN = (Obj, number) => {
+        renderSwitchArrMVN = (obj, number) => {
             return <div>
                         {
-                            Obj.map(function(item) {
+                            obj.map(function(item) {
                                 return <div>
                                             {getSpaceForArr(7).map(function (i) {
                                                 return i;
@@ -432,12 +444,9 @@ export default class Home extends Component {
                                             {renderSwitchObjectEnd(item.groupId, "\"groupId\":", number, 8)}
                                             {renderSwitchObjectEnd(item.artifactId, "\"artifactId\":", number, 8)}
                                             {renderSwitchObjectEnd(item.version, "\"version\":", number, 8)}
-                                            {item.serviceName != null &&
-                                             renderSwitchObjectEnd(item.serviceName, "\"service_name\":", number, 8)}
-                                            {item.classifier != null &&
-                                             renderSwitchObjectEnd(item.classifier, "\"classifier\":", number, 8)}
-                                            {item.mvnType != null &&
-                                             renderSwitchObjectEnd(item.mvnType, "\"mvn_type\":", number, 8)}
+                                            {renderSwitchObjectEnd(item.serviceName, "\"service_name\":", number, 8)}
+                                            {renderSwitchObjectEnd(item.classifier, "\"classifier\":", number, 8)}
+                                            {renderSwitchObjectEnd(item.mvnType, "\"mvn_type\":", number, 8)}
                                             {renderSwitchObjectEnd(item.mvnRepository, "\"mvn_repository\":", number, 8)}
                                             {renderSwitchMandatoryFields(item.hashesMerge, "\"hashes\":", number, 8)}
                                             {getSpaceForArr(7).map(function (i) {
@@ -461,10 +470,10 @@ export default class Home extends Component {
         }
 
         let renderSwitchArrScript;
-        renderSwitchArrScript = (Obj, number) => {
+        renderSwitchArrScript = (obj, number) => {
             return <div>
                         {
-                            Obj.map(function(item) {
+                            obj.map(function(item) {
                                 return <div>
                                             {getSpaceForArr(4).map(function (i) {
                                                 return i;
@@ -507,10 +516,10 @@ export default class Home extends Component {
         }
 
         let renderSwitchArrRPM;
-        renderSwitchArrRPM = (Obj, number) => {
+        renderSwitchArrRPM = (obj, number) => {
             return <div>
                 {
-                    Obj.map(function(item) {
+                    obj.map(function(item) {
                         return <div>
                             {getSpaceForArr(4).map(function (i) {
                                 return i;
@@ -551,10 +560,10 @@ export default class Home extends Component {
         }
 
         let renderSwitchParametersServices;
-        renderSwitchParametersServices = (Obj, number) => {
+        renderSwitchParametersServices = (obj, number) => {
             return <div>
                         {
-                            Obj.map(function(item) {
+                            obj.map(function(item) {
                                 return <div>
                                             {renderSwitchParametersServicesObject(item, number, 7)}
                                        </div>
@@ -563,6 +572,20 @@ export default class Home extends Component {
                    </div>
         }
 
+        let renderLinkedListErrors;
+        renderLinkedListErrors = (obj) => {
+            return <div align="center">
+                {
+                    obj.map(function(item) {
+                        return <div>
+                            {item}
+                        </div>
+                    })
+                }
+                <br/>
+                <h3>Please, choose correct file!</h3>
+            </div>
+        }
 
         let getSpace = (spaceNumber) => {
             let content = [];
@@ -628,36 +651,94 @@ export default class Home extends Component {
             </Col>
         }
 
-        return (
-            <div>
-                <Layout>
-                    <Content className="content">
+        let processingErrors;
+        processingErrors = (error) => {
+            if (error != null) {
+                if (error.firstLinkedListErrors != null ||
+                            error.secondLinkedListErrors != null) {
+                    return (
                         <Row>
-                            <Col span={12}>
-                                <div className="choose-file">
-                                    <input type="file" onChange={this.handleChangeForFirstFile} accept=".json"/>
-                                </div>
+                            <Col span={12} className="error2">
+                                {error.firstLinkedListErrors != null &&
+                                error.firstLinkedListErrors.length !== 0 &&
+                                renderLinkedListErrors(error.firstLinkedListErrors)}
                             </Col>
-                            <Col span={12}>
-                                <div className="choose-file">
-                                    <input type="file" onChange={this.handleChangeForSecondFile} accept=".json"/>
-                                </div>
+                            <Col span={12} className="error2">
+                                {error.secondLinkedListErrors != null &&
+                                error.secondLinkedListErrors.length !== 0 &&
+                                renderLinkedListErrors(error.secondLinkedListErrors)}
                             </Col>
                         </Row>
-                        { this.state.isLoaded &&
-                        <Row>
-                            {drawBranch(0)}
-                            {drawBranch(1)}
-                        </Row>}
+                    );
+                } else {
+                    return (
                         <Row>
                             <Col>
-                                <div className="upload">
-                                    <Button onClick={this.upload}>upload</Button>
-                                </div>
+                                <h2 className="errorAll">{error}</h2>
                             </Col>
                         </Row>
-                    </Content>
-                </Layout>
+                    );
+                }
+            }
+        }
+
+
+        let checkNullFiles;
+        checkNullFiles = (obj) => {
+            if ((obj.fileFirst === undefined || obj.fileSecond === undefined)) {
+                return (
+                    <Row>
+                        <Col span={12}>
+                            {obj.fileFirst === undefined &&
+                            <h3 className="error">Please, choose file!</h3>}
+                        </Col>
+                        <Col span={12}>
+                            {obj.fileSecond === undefined &&
+                            <h3 className="error">Please, choose file!</h3>}
+                        </Col>
+                    </Row>
+                );
+            }
+        }
+
+        return (
+            <div className="content">
+                <Row>
+                    <Col span={12}>
+                        <div className="choose-file">
+                            <input type="file" onChange={this.handleChangeForFirstFile} accept=".json"/>
+                        </div>
+                    </Col>
+                    <Col span={12}>
+                        <div className="choose-file">
+                            <input type="file" onChange={this.handleChangeForSecondFile} accept=".json"/>
+                        </div>
+                    </Col>
+                </Row>
+                {checkNullFiles(this.state)}
+                <Row>
+                    <Col>
+                        <div className="upload">
+                            <Button onClick={this.upload} disabled={this.state.fileFirst === undefined ||
+                            this.state.fileSecond === undefined}>upload</Button>
+                        </div>
+                        <br/>
+                    </Col>
+                </Row>
+                { (this.state.isLoaded) &&
+                <Row>
+                    {drawBranch(0)}
+                    {drawBranch(1)}
+                </Row>}
+                    {processingErrors(this.state.error)}
+                <Row>
+                    <Col>
+                        <div className="upload">
+                            <Button onClick={this.upload} disabled={this.state.fileFirst === undefined ||
+                                this.state.fileSecond === undefined}>upload</Button>
+                        </div>
+                    </Col>
+                </Row>
             </div>
         );
     }

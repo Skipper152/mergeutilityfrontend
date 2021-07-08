@@ -14,7 +14,8 @@ export default class Home extends Component {
         return (
 
             <header>
-                <h1>{this.state.content}</h1>
+                <br/>
+                <h1 align="center">{this.state.content}</h1>
             </header>
 
         );

@@ -14,12 +14,12 @@ class App extends Component {
         super(props);
 
         this.state = {
-            current: '',
+            current: ''
         };
     }
 
     handleClick = e => {
-        console.log('click ', e);
+        //console.log('click ', e);
         //this.setState({current: e.key});
     };
 
@@ -44,16 +44,13 @@ class App extends Component {
                     </Menu.Item>
                 </Menu>
 
-                <div className="container mt-1">
+                <div>
                     <Switch>
                         <Route exact path={["/", "/home"]} component={Home}/>
                         <Route exact path="/uploadFile" component={UploadFile}/>
                     </Switch>
                 </div>
-
             </div>
-
-
         );
     }
 
