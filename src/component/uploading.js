@@ -33,7 +33,6 @@ export default class Home extends Component {
             isLoaded : false,
             error: null
         })
-        //e = null;
     }
 
     handleChangeForSecondFile = (e) => {
@@ -42,7 +41,6 @@ export default class Home extends Component {
             isLoaded : false,
             error: null
         })
-        //e = null;
     }
 
     upload() {
@@ -730,15 +728,7 @@ export default class Home extends Component {
                     {drawBranch(0)}
                     {drawBranch(1)}
                 </Row>}
-                    {processingErrors(this.state.error)}
-                <Row>
-                    <Col>
-                        <div className="upload">
-                            <Button onClick={this.upload} disabled={this.state.fileFirst === undefined ||
-                                this.state.fileSecond === undefined}>upload</Button>
-                        </div>
-                    </Col>
-                </Row>
+                {processingErrors(this.state.error)}
             </div>
         );
     }
