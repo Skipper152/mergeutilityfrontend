@@ -19,7 +19,7 @@ class App extends Component {
     }
 
     handleClick = e => {
-        //console.log('click ', e);
+        console.log('click ', e);
         //this.setState({current: e.key});
     };
 
@@ -56,6 +56,5 @@ class App extends Component {
 
 }
 
-// export default App;
 export default withRouter((App));
 

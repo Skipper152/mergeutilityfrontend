@@ -11,7 +11,6 @@ export default class Home extends Component {
         this.handleChangeForSecondFile = this.handleChangeForSecondFile.bind(this);
 
         this.upload = this.upload.bind(this);
-        //this.upload1 = this.upload1.bind(this);
 
         this.state = {
             isLoaded: false,
@@ -29,9 +28,9 @@ export default class Home extends Component {
 
     handleChangeForFirstFile = (e) => {
         this.setState({
-            fileFirst: e.target.files[0],
+            fileFirst : e.target.files[0],
             isLoaded : false,
-            error: null
+            error : null
         })
     }
 
@@ -69,20 +68,6 @@ export default class Home extends Component {
             })
         });
     }
-
-    /*upload1() {
-        console.log(this.state.fileFirst);
-
-        let fr = new FileReader()
-        fr.readAsText(this.state.fileFirst)
-        fr.onload = function () {
-            const file = JSON.parse(fr.result);
-
-            console.log(JSON.parse(fr.result))
-            axios.post("http://localhost:8080/upload1", file);
-
-        }
-    }*/
 
     render() {
         const {data} = this.state;
